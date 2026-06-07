@@ -224,16 +224,145 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .stagger.in>*:nth-child(5){opacity:1;transform:none;transition-delay:.24s}
 .stagger.in>*:nth-child(6){opacity:1;transform:none;transition-delay:.3s}
 
+/* ── HAMBURGER MENU ── */
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:4px;z-index:210;}
+.ham span{display:block;width:22px;height:2px;background:var(--white);transition:all .2s;}
+.ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.ham.open span:nth-child(2){opacity:0;}
+.ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
 @media(max-width:800px){
-  body{cursor:auto;}
+  /* base */
+  body{cursor:auto;font-size:14px;}
   .cur-dot,.cur-ring{display:none;}
-  .topbar,.hero,.sec-hdr,.card-top,.card-detail,.sk-grid,.tools-sec,.about-col,.contact-block,.foot{padding-left:1.4rem;padding-right:1.4rem;}
-  .hero{grid-template-columns:1fr;gap:2.5rem;}
-  .about-strip-inner{grid-template-columns:1fr;}
-  .sk-grid{grid-template-columns:1fr 1fr;}
+
+  /* topbar */
+  .topbar{padding:0 1.2rem;height:52px;}
+  .topbar-name{font-size:.72rem;}
+  .ham{display:flex;}
+
+  /* mobile nav overlay */
+  .nav{
+    display:none;
+    position:fixed;top:52px;left:0;right:0;bottom:0;
+    background:var(--ink);
+    flex-direction:column;align-items:center;justify-content:center;
+    gap:0;z-index:201;
+  }
+  .nav.open{display:flex;}
+  .nav-btn{
+    height:auto;padding:1.4rem 2rem;
+    font-size:.85rem;letter-spacing:.12em;
+    color:rgba(255,255,255,.55);width:100%;text-align:center;
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .nav-btn::after{display:none;}
+  .nav-btn.active{color:var(--yellow);}
+  .nav-btn:hover{color:var(--white);}
+
+  /* pages */
+  .page{padding-top:52px;}
+
+  /* HERO – stack photo on top, content below */
+  .hero{display:block!important;padding:0!important;min-height:auto!important;}
+  .hero > div[style*="grid"]{
+    display:flex!important;flex-direction:column!important;
+    min-height:auto!important;
+  }
+  /* photo panel */
+  .hero > div[style*="grid"] > div:first-child{
+    height:55vw;min-height:220px;max-height:320px;
+    position:relative;overflow:hidden;
+  }
+  /* tag row */
+  .hero > div > div[style*="position:absolute;top"]{
+    position:relative!important;top:auto!important;left:auto!important;
+    right:auto!important;padding:.8rem 1.2rem .6rem;
+    background:var(--ink);
+  }
+  /* big name overlay – hide on mobile (shown in photo layer) */
+  .hero > div[style*="grid"] > div:first-child > div[style*="position:absolute;top:4"]{
+    top:1rem!important;left:1rem!important;right:1rem!important;
+  }
+  .hero > div[style*="grid"] > div:first-child > div[style*="position:absolute;top:4"] > div:first-child{
+    font-size:clamp(2rem,10vw,3.2rem)!important;
+  }
+  /* content panel */
+  .hero > div[style*="grid"] > div:last-child{
+    padding:1.8rem 1.2rem 2rem!important;
+    border-left:none!important;border-top:3px solid var(--yellow)!important;
+  }
+  .hero-bio{font-size:.85rem;max-width:100%;}
+  .btn-row{flex-wrap:wrap;gap:8px;}
+  .btn{font-size:.62rem;padding:9px 18px;}
+  .stat-val{font-size:1rem;}
+  .stat-desc{font-size:.64rem;}
+
+  /* contact bar at bottom of home */
+  div[style*="Contact Me"]{
+    padding:1.5rem 1.2rem!important;
+    flex-direction:column!important;align-items:flex-start!important;gap:.8rem!important;
+  }
+  div[style*="Contact Me"] > div:last-child{
+    flex-direction:column!important;gap:.6rem!important;
+  }
+
+  /* about strip */
+  .about-strip{padding:2rem 1.2rem;}
+  .about-strip-inner{grid-template-columns:1fr;gap:2rem;}
+
+  /* section headers */
+  .sec-hdr{padding:2rem 1.2rem .6rem;}
+  .sec-title{font-size:.62rem;}
+
+  /* work cards */
+  .card-top{padding:1.2rem 1.2rem;grid-template-columns:1fr auto;gap:1rem;}
+  .card-title{font-size:.88rem;}
+  .card-detail{padding:0 1.2rem 1.6rem;}
+  .mini-row{grid-template-columns:repeat(3,1fr);}
+  .pull-bar{padding:.8rem 1rem;flex-wrap:wrap;gap:.5rem;}
+  .pull-num{font-size:1.5rem;}
+
+  /* career path – allow horizontal scroll */
+  div[style*="Career Path"]{padding:1.5rem 1.2rem!important;}
+  .career-scroll{padding-bottom:.8rem;}
+
+  /* skills grid */
+  .sk-grid{grid-template-columns:1fr 1fr;padding:1.2rem 1.2rem 0;}
+  .sk-card{height:150px;}
+  .sk-num{font-size:2.4rem;}
+  .sk-back-desc{font-size:.72rem;}
+  .tools-sec{padding:1.5rem 1.2rem 2rem;}
+
+  /* about page */
   .about-pg-grid{grid-template-columns:1fr;}
+  .about-col{padding:1.8rem 1.2rem;}
   .about-col:first-child{border-right:none;border-bottom:1px solid var(--border);}
-  .contact-block{grid-template-columns:1fr 1fr;}
+  .accom-item{grid-template-columns:60px 1fr;}
+  .accom-tag{font-size:.5rem;padding-right:.5rem;}
+
+  /* contact block */
+  .contact-block{padding:1.5rem 1.2rem;grid-template-columns:1fr 1fr;gap:1px;}
+  .contact-cell{padding:1rem;}
+  .contact-val{font-size:.75rem;}
+
+  /* footer */
+  .foot{padding:1rem 1.2rem;flex-wrap:wrap;gap:.4rem;}
+  .foot-name{font-size:.68rem;}
+  .foot-r{font-size:.55rem;}
+}
+
+@media(max-width:480px){
+  .sk-grid{grid-template-columns:1fr;}
+  .sk-card{height:130px;}
+  .contact-block{grid-template-columns:1fr;}
+  .mini-row{grid-template-columns:1fr 1fr;}
+  .card-badge{font-size:.5rem;}
+  .chips .chip{font-size:.46rem;}
+  .about-strip{padding:1.5rem 1rem;}
+  .about-col{padding:1.5rem 1rem;}
+  .card-top{padding:1rem;}
+  .card-detail{padding:0 1rem 1.5rem;}
 }
 
 /* subtle career scrollbar */
@@ -248,12 +377,15 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 
 <header class="topbar">
   <div class="topbar-name">Shruti <span style="color:var(--yellow)">Poddar</span><span style="color:var(--yellow)">.</span></div>
-  <nav class="nav">
+  <nav class="nav" id="navMenu">
     <button class="nav-btn active" onclick="show('home')">Home</button>
     <button class="nav-btn" onclick="show('work')">Work</button>
     <button class="nav-btn" onclick="show('skills')">Skills</button>
     <button class="nav-btn" onclick="show('about')">About</button>
   </nav>
+  <button class="ham" id="hamBtn" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
 <!-- ── HOME ── -->
@@ -341,7 +473,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   </div>
   <div class="foot">
     <div class="foot-name">Shruti Poddar<span>.</span></div>
-    <div class="foot-r">MBA Marketing · KJSIM · Mumbai · 2026</div>
+    <div class="foot-r">MBA Marketing · KJSIM · Mumbai · 2025</div>
   </div>
 </main>
 
@@ -690,7 +822,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 
   <div class="foot">
     <div class="foot-name">Shruti Poddar<span>.</span></div>
-    <div class="foot-r">MBA Marketing · KJSIM · Mumbai · 2026</div>
+    <div class="foot-r">MBA Marketing · KJSIM · Mumbai · 2025</div>
   </div>
 </main>
 
@@ -741,7 +873,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 
   <div class="foot">
     <div class="foot-name">Shruti Poddar<span>.</span></div>
-    <div class="foot-r">MBA Marketing · KJSIM · Mumbai · 2026</div>
+    <div class="foot-r">MBA Marketing · KJSIM · Mumbai · 2025</div>
   </div>
 </main>
 
@@ -810,7 +942,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 
   <div class="foot">
     <div class="foot-name">Shruti Poddar<span>.</span></div>
-    <div class="foot-r">MBA Marketing · KJSIM · Mumbai · 2026</div>
+    <div class="foot-r">MBA Marketing · KJSIM · Mumbai · 2025</div>
   </div>
 </main>
 
@@ -823,8 +955,19 @@ document.addEventListener('mouseover',e=>{if(e.target.matches('a,button,.card,.s
 document.addEventListener('mouseout',e=>{if(e.target.matches('a,button,.card,.sk-card,.tool-pill,.tag,.btn,.cert-item,.accom-item'))ring.classList.remove('hov');});
 (function raf(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cur.style.transform=`translate(${mx}px,${my}px)`;ring.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(raf);})();
 
+function toggleNav(){
+  const nav=document.getElementById('navMenu');
+  const btn=document.getElementById('hamBtn');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+function closeNav(){
+  document.getElementById('navMenu').classList.remove('open');
+  document.getElementById('hamBtn').classList.remove('open');
+}
+
 const PAGES=['home','work','skills','about'];
-function show(id){PAGES.forEach((p,i)=>{document.getElementById(p).classList.toggle('visible',p===id);document.querySelectorAll('.nav-btn')[i].classList.toggle('active',p===id);});window.scrollTo({top:0,behavior:'smooth'});setTimeout(triggerReveals,80);}
+function show(id){PAGES.forEach((p,i)=>{document.getElementById(p).classList.toggle('visible',p===id);document.querySelectorAll('.nav-btn')[i].classList.toggle('active',p===id);});window.scrollTo({top:0,behavior:'smooth'});setTimeout(triggerReveals,80);closeNav();}
 
 function toggle(id){const el=document.getElementById(id),tog=document.getElementById('t-'+id);if(!el||!tog)return;const open=el.classList.toggle('open');tog.textContent=open?'- collapse':'+ expand';}
 
